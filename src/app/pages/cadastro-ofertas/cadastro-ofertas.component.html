@@ -1,0 +1,63 @@
+<section>
+    <div class="container">
+        <h2 *ngIf="!editing">Cadastro de Ofertas</h2>
+        <h2 *ngIf="editing">Edição de Ofertas</h2>
+
+        <div class="grid">
+            <div class="campos">
+                <mat-form-field appearance="outline">
+                    <mat-label>ID</mat-label>
+                    <input matInput type="number" [formControl]="id" [readonly]="true" placeholder="ID do jogo">
+                </mat-form-field>
+            </div>
+
+
+            <div class="campos">
+                <mat-form-field appearance="outline">
+                    <mat-label>Título</mat-label>
+                    <input matInput type="text" [formControl]="titulo" placeholder="Título do jogo">
+                    <mat-error *ngIf="titulo.invalid">O título é obrigatório.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="campos">
+                <mat-form-field appearance="outline">
+                    <mat-label>Preço</mat-label>
+                    <input matInput type="number" step="0.1" [formControl]="preco" placeholder="Preço do jogo">
+                    <mat-error *ngIf="preco.invalid">O preço deve ser maior que 0,00.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="campos">
+                <mat-form-field appearance="outline">
+                    <mat-label>Preço com desconto</mat-label>
+                    <input matInput (input)="getDescontoError()" type="number" step="0.1" [formControl]="precoDesconto" placeholder="Preço com desconto">
+                    <mat-error *ngIf="precoDesconto.invalid">O preço do desconto deve ser maior que 0,00.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="campos">
+                <mat-form-field appearance="outline" >
+                    <mat-label>Loja</mat-label>
+                    <mat-select [formControl]="loja">
+                        <mat-option *ngFor="let loja of lojas" [value]="loja.id">{{loja.nome}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="loja.invalid">Selecione a loja.</mat-error>
+                </mat-form-field>
+            </div>
+
+
+            <div class="campos">
+                <mat-form-field appearance="outline">
+                    <mat-label>Descrição</mat-label>
+                    <input matInput [formControl]="descricao" placeholder="Descrição">
+                </mat-form-field>
+            </div>
+
+        </div>
+        <div class="campos">
+            <button mat-raised-button *ngIf="editing" [disabled]="loading" (click)="editarOferta()" color="primary">Salvar</button>
+            <button mat-raised-button *ngIf="!editing" [disabled]="loading" (click)="cadastrarOferta()" color="primary">Cadastrar</button>
+        </div>
+    </div>
+</section>
